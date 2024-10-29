@@ -32,56 +32,60 @@ const getAuthorByEmail = async (req, res) => {
 
 
 
-// // Crear entry por email
-// const createEntry = async (req, res) => {
-//     const newEntry = req.body; // {title,content,email,category}
-//     const response = await entry.createEntry(newEntry);
-//     res.status(201).json({
-//         "items_created": response,
-//         data: newEntry
-//     });
-// }
+// Crear autor
+const createAuthor= async (req, res) => {
+    const newAuthor = req.body; // {name,surname,email,image}
+    const response = await author.createAuthor(newAuthor);
+    res.status(201).json({
+        "items_created": response,
+        message: `Usuario creado: ${req.body.email}`,
+        data: newAuthor
+    });
+}
+// Actualizar Autor por email
+const updateAuthorByEmail = async (req, res) => {
+    const updatedAuthor = req.body; // {name, surname, image, email, currentEmail}
+    const currentEmail = req.body.currentEmail; // current email como criterio de búsqueda de autor
+    try {
+        const response = await author.updateAuthorByEmail(updatedAuthor, currentEmail);
+        if (response) {
+            res.status(200).json({
+                message: `Usuario actualizado: ${currentEmail}`,
+                data: updatedAuthor
+            });
+        } else {
+            res.status(404).json({ error: 'Autor no encontrado' });
+        }
+    } catch (error) {
+        console.error('Error updating Author:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
 
-// const updateEntry = async (req, res) => {
-//     const updatedEntry = req.body; // {title, content, category}
-//     const originalTitle = req.body.originalTitle; // Título original a buscar
-//     try {
-//         const response = await entry.updateEntry(updatedEntry, originalTitle);
-//         if (response) {
-//             res.status(200).json({
-//                 message: 'Actualizado correctamente',
-//                 data: response
-//             });
-//         } else {
-//             res.status(404).json({ error: 'Entry no encontrada' });
-//         }
-//     } catch (error) {
-//         console.error('Error updating entry:', error);
-//         res.status(500).json({ error: 'Internal server error' });
-//     }
-// }
-
-// const deleteEntry = async (req, res) => {
-//     const entryToDelete = req.body.title; // {title} le pasaremos el title por el body del postman
-//     try {
-//         const response = await entry.deleteEntry(entryToDelete);
-//         if (response) {
-//             res.status(200).json({
-//                 message: `Se ha borrado la entry: ${entryToDelete}`,
-//                 data: response
-//             });
-//         } else {
-//             res.status(404).json({ error: 'Entry con ese título no encontrada' });
-//         }
-//     } catch (error) {
-//         console.error('Error deleting entry:', error);
-//         res.status(500).json({ error: 'Internal server error' });
-//     }
-// }
+const deleteAuthorByEmail = async (req, res) => {
+    const authorToDelete = req.body.email; // {email} le pasaremos el email por el body del postman
+    try {
+        const response = await author.deleteAuthorByEmail(authorToDelete);
+        if (response) {
+            res.status(200).json({
+                message: `Se ha borrado: ${authorToDelete}`,
+                data: response
+            });
+        } else {
+            res.status(404).json({ error: 'Autor con ese email no encontrado' });
+        }
+    } catch (error) {
+        console.error('Error deleting author:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
 
 
 module.exports = {
     getAuthors,
-    getAuthorByEmail
+    getAuthorByEmail,
+    createAuthor,
+    updateAuthorByEmail,
+    deleteAuthorByEmail
 
 }

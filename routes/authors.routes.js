@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get('/', authorsController.getAuthors);
 router.get('/email',authorsController.getAuthorByEmail);
-// router.post('/', entriesController.createEntry);
-// router.put('/',entriesController.updateEntry);
-// router.delete('/', entriesController.deleteEntry);
+router.post('/', authorsController.createAuthor);
+router.put('/',authorsController.updateAuthorByEmail);
+router.delete('/', authorsController.deleteAuthorByEmail);
 
 module.exports = router;

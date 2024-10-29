@@ -6,17 +6,16 @@ const queries = {
     getAllAuthors: `SELECT a.name,a.surname,a.image,a.email 
     FROM authors AS a
     ORDER BY a.name;`,
-    createEntry: `INSERT INTO entries(title,content,id_author,category) 
-    VALUES ($1,$2,
-    (SELECT id_author FROM authors WHERE email=$3),$4)
+    createAuthor: `INSERT INTO authors(name,surname,image,email) 
+    VALUES ($1,$2,$3,$4)
     `,
-    updateEntryByTitle: `UPDATE entries
-    SET title = $1, content = $2, category = $3
-    WHERE title = $4
-    RETURNING *;`,
-    deleteEntryByTitle: `DELETE FROM entries
-    WHERE title = $1
-    RETURNING *;
+    updateAuthorByEmail: `UPDATE authors
+    SET name = $1, surname = $2, image = $3, email = $4
+    WHERE email = $5
+    `,
+    deleteAuthorByEmail: `DELETE FROM authors
+    WHERE email = $1
+    
     `,
     
 }
