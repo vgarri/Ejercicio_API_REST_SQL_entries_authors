@@ -12,3 +12,11 @@ ADD CONSTRAINT id_author
 FOREIGN KEY (id_author)
 REFERENCES authors(id_author)
 ON DELETE CASCADE;
+
+
+-- la query para borrar autor por email:
+DELETE FROM authors 
+WHERE id_author = 
+(SELECT id_author 
+FROM authors 
+WHERE email = $1);

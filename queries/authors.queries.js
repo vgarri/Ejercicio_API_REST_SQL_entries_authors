@@ -13,9 +13,11 @@ const queries = {
     SET name = $1, surname = $2, image = $3, email = $4
     WHERE email = $5
     `,
-    deleteAuthorByEmail: `DELETE FROM authors
-    WHERE email = $1
-    
+    deleteAuthorByEmail: `DELETE FROM authors 
+    WHERE id_author = 
+    (SELECT id_author 
+    FROM authors 
+    WHERE email = $1);
     `,
     
 }
